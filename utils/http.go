@@ -2,7 +2,6 @@ package utils
 
 import (
 	"MailWizz-with-go/model"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -12,7 +11,7 @@ import (
 )
 
 // HttpGo 发送数据到email服务器
-func HttpGo(h model.Host, data map[string]string) (interface{}, string){
+func HttpGo(h model.Host, data map[string]string) ([]byte, error) {
 	timestamp := strconv.Itoa(int(time.Now().Unix()))
 
 	formdata := url.Values{}
@@ -27,9 +26,7 @@ func HttpGo(h model.Host, data map[string]string) (interface{}, string){
 	mts.Set("X-MW-REMOTE-ADDR", "")
 
 	hash := Signature(h, mts.Encode())
-
-
-	req, _ := http.NewRequest(h.Method, GobalConfig.Host + h.Source, strings.NewReader(formdata.Encode()))
+	req, _ := http.NewRequest(h.Method, GobalConfig.Host+h.Source, strings.NewReader(formdata.Encode()))
 	req.Header.Add("X-MW-PUBLIC-KEY", GobalConfig.PublicKey)
 	req.Header.Add("X-MW-TIMESTAMP", timestamp)
 	req.Header.Add("X-MW-REMOTE-ADDR", "")
@@ -40,15 +37,14 @@ func HttpGo(h model.Host, data map[string]string) (interface{}, string){
 
 	res, err := (&http.Client{}).Do(req)
 	if err != nil {
-		return nil, "Post failed: " + h.Source + "-" + err.Error()
+		return nil, err
 	}
 
 	defer res.Body.Close()
 
 	result, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return nil, err.Error()
+		return nil, err
 	}
-	fmt.Println("result: ", string(result))
-	return result, ""
+	return result, nil
 }

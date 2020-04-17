@@ -34,29 +34,48 @@ func TestSignature(t *testing.T) {
 
 }
 
+type School struct {
+	Class Classes `json:"class"`
+	Name  string  `json:"school_name"`
+}
+type Classes struct {
+	Name string `json:"class_name"`
+	Std  Std    `json:"student"`
+}
 type Std struct {
-	Name string
-	Age  int
+	Name string `json:"name"`
+	Age  int    `json:"age"`
 }
 
 func TestStructToMap(t *testing.T) {
-	s := Std{
-		"will",
-		18,
+	s := School{
+		Classes{
+			"3-1",
+			Std{
+				"will",
+				20,
+			},
+		},
+		"yihzong",
 	}
 
-	r := StructToMap(s)
+	r := StructToMap(s, "")
 	fmt.Println(r)
 }
 
-//func TestMapToQueryString(t *testing.T) {
-//	m := map[string]interface{}{
-//		"Home": "1",
-//		"a": "222",
-//		"X-Hss-ss": "2213",
-//		"X-Bss-ss": "222",
-//		"AXCC": "w2@qq.com",
-//	}
-//	r := MapToQueryString(m)
-//	fmt.Println(r)
-//}
+func BenchmarkStructToMap(b *testing.B) {
+	s := School{
+		Classes{
+			"3-1",
+			Std{
+				"will",
+				20,
+			},
+		},
+		"yihzong",
+	}
+	for i := 0; i < b.N; i++ {
+
+		StructToMap(s, "")
+	}
+}

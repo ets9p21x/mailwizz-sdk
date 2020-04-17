@@ -5,20 +5,20 @@ import (
 	"testing"
 )
 
-func TestPost(t *testing.T) {
+func TestHttpGo(t *testing.T) {
 	user := model.UserInfo{
 		EMAIL:  "1234@qq.com",
 		FNAME:  "Will1",
 		LNAME:  "Smit1h",
 		CUSTOM: "custo1m",
 	}
-	u := StructToMap(user)
+	u := StructToMap(user, "")
 	h := model.Host{
 		Method: model.MethodPOST,
 		Source: "/lists/xp539hntgk917/subscribers",
 	}
 	_, err := HttpGo(h, u)
-	if err != "" {
+	if err != nil {
 		t.Error(err)
 	}
 
@@ -31,7 +31,7 @@ func TestPost(t *testing.T) {
 	g["page"] = "1"
 	g["per_page"] = "10"
 	_, err = HttpGo(h, g)
-	if err != "" {
+	if err != nil {
 		t.Error(err)
 	}
 }

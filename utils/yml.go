@@ -15,9 +15,9 @@ type Config struct {
 
 // GobalConfig 配置全局变量
 var GobalConfig = Config{
-	PublicKey: "d253918744bfxxx6c87f9460ce22d6522",
-	PrivateKey: "a41eb8891bbxxxe6394e055d175b00021f",
-	Host: "https://xxx.com/latest/api/index.php",
+	PublicKey:  "xxx",
+	PrivateKey: "xxx",
+	Host:       "https://xxx.com/latest/api/index.php",
 }
 
 // ReadYML 读取配置文件
