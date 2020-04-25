@@ -2,11 +2,12 @@ package utils
 
 import (
 	"MailWizz-with-go/model"
+	"bytes"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -24,9 +25,9 @@ func HttpGo(h model.Host, data map[string]string) ([]byte, error) {
 	mts.Set("X-MW-PUBLIC-KEY", GobalConfig.PublicKey)
 	mts.Set("X-MW-TIMESTAMP", timestamp)
 	mts.Set("X-MW-REMOTE-ADDR", "")
-
+	log.Println(formdata.Encode())
 	hash := Signature(h, mts.Encode())
-	req, _ := http.NewRequest(h.Method, GobalConfig.Host+h.Source, strings.NewReader(formdata.Encode()))
+	req, _ := http.NewRequest(h.Method, GobalConfig.Host+h.Source, bytes.NewBuffer([]byte(formdata.Encode())))
 	req.Header.Add("X-MW-PUBLIC-KEY", GobalConfig.PublicKey)
 	req.Header.Add("X-MW-TIMESTAMP", timestamp)
 	req.Header.Add("X-MW-REMOTE-ADDR", "")

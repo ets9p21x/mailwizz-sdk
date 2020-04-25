@@ -10,8 +10,8 @@ type UserInfo struct {
 
 // PageStruct
 type PageStruct struct {
-	Page    string `json:"Page"`
-	PerPage string `json:"PerPage"`
+	Page    string `json:"PAGE"`
+	PerPage string `json:"PER_PAGE"`
 }
 
 type ListsNotifications struct {

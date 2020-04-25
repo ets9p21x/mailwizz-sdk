@@ -3,31 +3,35 @@ package modules
 import (
 	"MailWizz-with-go/param"
 	"testing"
+	"time"
 )
 
 func TestCreateCampaign(t *testing.T) {
 	data := param.Campaign{
 		Campaign: param.CampaignBody{
-			Name:       "dddd",
+			Name:       "新年活动",
 			Type:       "regular",
 			FromName:   "system",
-			FromEmail:  "info@xxx.com",
+			FromEmail:  "info@selpte.com",
 			Subject:    "Happy New Year",
-			ReplyTo:    "info@xxx.com",
-			SendAt:     "2020-04-20 14:07:00",//time.Now().Format("2006-01-02 15:04:05"),
-			ListUid:    "",
+			ReplyTo:    "info@selpte.com",
+			SendAt:     time.Now().Format("2006-01-02 15:04:05"),
+			ListUid:    "xp539hntgk917",
 			SegmentUid: "",
 			Options: param.Options{
-				UrlTracking:"no",
-				JsonFeed:"no",
-				XmlFeed:"no",
-				PlainTextEmail:"yes",
+				"no",
+				"no",
+				"no",
+				"yes",
+				"",
 			},
 			CampaignTemplate: param.CampaignTemplate{
-				TemplateUid:"",
-				Content:"<!DOCTYPE html><html><head><meta name='charset' content='utf-8'><title></title></head><body>dsdsdssd<br /><br />[UNSUBSCRIBE_URL], [COMPANY_FULL_ADDRESS]</body></html>",
-				InlineCss: "no",
-				AutoPlainText:"yes",
+				"vj315mqc8x5e7",
+				"",
+				"<!DOCTYPE html><html><head><meta name=\"charset\" content=\"utf-8\"><title></title></head><body>dsdsdssd<br /><br />[UNSUBSCRIBE_URL], [COMPANY_FULL_ADDRESS]</body></html>",
+				"no",
+				"",
+				"yes",
 			},
 		},
 	}

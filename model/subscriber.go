@@ -32,3 +32,20 @@ type Subscriber struct {
 	Data   SubscriberData `json:"data"`
 	Error  string         `json:"error"`
 }
+
+type SubscriberOneDataRecord struct {
+	SubscriberUid string `json:"subscriber_uid"`
+	Email         string `json:"email"`
+	IpAddress     string `json:"ip_address"`
+	Source        string `json:"source"`
+}
+
+type SubscriberOneData struct {
+	Record SubscriberOneDataRecord `json:"record"`
+}
+
+type SubscriberOne struct {
+	Status string            `json:"status`
+	Data   SubscriberOneData `json:"data"`
+	Error  string            `json:"error"`
+}

@@ -7,14 +7,14 @@ type CampaignRecord struct {
 }
 
 type CampaignData struct {
-	Count       string          `json:"count"`
-	TotalPages  int             `json:"total_pages"`
-	CurrentPage int             `json:"current_page"`
+	Count       string           `json:"count"`
+	TotalPages  int              `json:"total_pages"`
+	CurrentPage int              `json:"current_page"`
 	Records     []CampaignRecord `json:"records"`
 }
 
 type Campaign struct {
-	Status string      `json:"status"`
+	Status string       `json:"status"`
 	Data   CampaignData `json:"data"`
-	Error  string      `json:"error"`
+	Error  string       `json:"error"`
 }

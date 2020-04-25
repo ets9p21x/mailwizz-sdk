@@ -2,12 +2,13 @@ package modules
 
 import (
 	"MailWizz-with-go/model"
+	"MailWizz-with-go/param"
 	"MailWizz-with-go/utils"
 	"encoding/json"
 	"strconv"
 )
 
-// GetSubscribers 订阅列表
+// GetSubscribers get a list of subscribers
 func GetSubscribers(listUid string, page, perPage int) (model.Subscribers, error) {
 	p := model.PageStruct{
 		Page:    strconv.Itoa(page),
@@ -27,7 +28,7 @@ func GetSubscribers(listUid string, page, perPage int) (model.Subscribers, error
 	return r, err
 }
 
-// GetSubscriber 订阅列表
+// GetSubscriber get a subscriber
 func GetSubscriber(listUid, subscriberUid string) (model.Subscriber, error) {
 
 	h := model.Host{
@@ -36,6 +37,96 @@ func GetSubscriber(listUid, subscriberUid string) (model.Subscriber, error) {
 	}
 	r := model.Subscriber{}
 	result, err := utils.HttpGo(h, make(map[string]string))
+	if err != nil {
+		return r, err
+	}
+	err = json.Unmarshal(result, &r)
+	return r, err
+}
+
+// CreateSubscriber create a subscriber
+func CreateSubscriber(listUid string, sub param.Subscriber) (model.SubscriberOne, error) {
+	r := model.SubscriberOne{}
+
+	h := model.Host{
+		Method: model.MethodPOST,
+		Source: listPath + "/" + listUid + "/subscribers",
+	}
+	data := utils.StructToMap(sub, "")
+	result, err := utils.HttpGo(h, data)
+
+	if err != nil {
+		return r, err
+	}
+	err = json.Unmarshal(result, &r)
+	return r, err
+}
+
+// UpdateSubscriber update the subscriber
+func UpdateSubscriber(listUid string, sub param.Subscriber) (model.SubscriberOne, error) {
+	r := model.SubscriberOne{}
+
+	h := model.Host{
+		Method: model.MethodPUT,
+		Source: listPath + "/" + listUid + "/subscribers/" + sub.SubscriberUid,
+	}
+	data := utils.StructToMap(sub, "")
+	result, err := utils.HttpGo(h, data)
+
+	if err != nil {
+		return r, err
+	}
+	err = json.Unmarshal(result, &r)
+	return r, err
+}
+
+// DeleteSubscriber update the subscriber
+func DeleteSubscriber(listUid, subscriberUid string) (model.SubscriberOne, error) {
+	r := model.SubscriberOne{}
+
+	h := model.Host{
+		Method: model.MethodDELETE,
+		Source: listPath + "/" + listUid + "/subscribers/" +subscriberUid,
+	}
+	result, err := utils.HttpGo(h, nil)
+
+	if err != nil {
+		return r, err
+	}
+	err = json.Unmarshal(result, &r)
+	return r, err
+}
+
+// SearchSubscriberByEmail search subscriber by email
+func SearchSubscriberByEmail(listUid, email string) (model.SubscriberOne, error) {
+	r := model.SubscriberOne{}
+
+	h := model.Host{
+		Method: model.MethodGET,
+		Source: listPath + "/" + listUid + "/subscribers/search-by-email",
+	}
+	data := map[string]string{
+		"EMAIL": email,
+	}
+	result, err := utils.HttpGo(h, data)
+
+	if err != nil {
+		return r, err
+	}
+	err = json.Unmarshal(result, &r)
+	return r, err
+}
+
+// Unsubscriber Unsubscribe existing subscriber from the list
+func Unsubscriber(listUid, subscriberUid string) (model.SubscriberOne, error) {
+	r := model.SubscriberOne{}
+
+	h := model.Host{
+		Method: model.MethodPUT,
+		Source: listPath + "/" + listUid + "/subscribers/"+ subscriberUid + "/unsubscribe",
+	}
+	result, err := utils.HttpGo(h, nil)
+
 	if err != nil {
 		return r, err
 	}
