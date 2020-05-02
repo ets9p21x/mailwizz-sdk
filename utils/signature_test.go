@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"MailWizz-with-go/model"
+	"mailwizz-sdk/model"
 	"fmt"
 	"testing"
 )

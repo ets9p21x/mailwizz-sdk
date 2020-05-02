@@ -1,9 +1,9 @@
 package modules
 
 import (
-	"MailWizz-with-go/model"
-	"MailWizz-with-go/param"
-	"MailWizz-with-go/utils"
+	"mailwizz-sdk/model"
+	"mailwizz-sdk/param"
+	"mailwizz-sdk/utils"
 	"encoding/json"
 	"strconv"
 )
@@ -126,6 +126,30 @@ func Unsubscriber(listUid, subscriberUid string) (model.SubscriberOne, error) {
 		Source: listPath + "/" + listUid + "/subscribers/"+ subscriberUid + "/unsubscribe",
 	}
 	result, err := utils.HttpGo(h, nil)
+
+	if err != nil {
+		return r, err
+	}
+	err = json.Unmarshal(result, &r)
+	return r, err
+}
+
+// CreateSubscriberInBulk ADD SUBSCRIBERS IN BULK (since MailWizz 1.8.1)
+func CreateSubscriberInBulk(listUid string, subs []param.Subscriber) (model.SubscriberOne, error) {
+	r := model.SubscriberOne{}
+
+	h := model.Host{
+		Method: model.MethodPOST,
+		Source: listPath + "/" + listUid + "subscribers/bulk",
+	}
+	data := make(map[string]string)
+	for k, v := range subs {
+		t := utils.StructToMap(v, "")
+		for ki, vi := range t {
+			data["["+strconv.Itoa(k)+"]["+ki+"]"] = vi
+		}
+	}
+	result, err := utils.HttpGo(h, data)
 
 	if err != nil {
 		return r, err

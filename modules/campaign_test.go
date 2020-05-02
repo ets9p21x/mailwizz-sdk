@@ -1,7 +1,7 @@
 package modules
 
 import (
-	"MailWizz-with-go/param"
+	"mailwizz-sdk/param"
 	"testing"
 	"time"
 )

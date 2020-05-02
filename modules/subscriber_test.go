@@ -1,7 +1,7 @@
 package modules
 
 import (
-	"MailWizz-with-go/param"
+	"mailwizz-sdk/param"
 	"testing"
 )
 
@@ -75,3 +75,28 @@ func TestUnsubscriber(t *testing.T) {
 	t.Log(r)
 }
 
+func TestCreateSubscriberInBulk(t *testing.T) {
+	subs := []param.Subscriber{
+		{
+			Email:"1213@qq.com",
+			FName:"123",
+			LName:"456",
+		},
+		{
+			Email:"456@qq.com",
+			FName:"123",
+			LName:"456",
+		},
+		{
+			Email:"789@qq.com",
+			FName:"123",
+			LName:"456",
+		},
+	}
+
+	r, err := CreateSubscriberInBulk("xp539hntgk917", subs)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	t.Log(r)
+}

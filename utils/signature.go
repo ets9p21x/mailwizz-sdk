@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"MailWizz-with-go/model"
+	"mailwizz-sdk/model"
 	"crypto/hmac"
 	"crypto/sha1"
 	"fmt"
@@ -50,7 +50,6 @@ func StructToMap(i interface{}, s string) map[string]string {
 			} else {
 				m[s+"["+key+"]"] = v.Field(j).Interface().(string)
 			}
-
 			break
 		default:
 			if len(s) == 0 {

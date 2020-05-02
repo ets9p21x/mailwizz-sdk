@@ -1,9 +1,9 @@
 package modules
 
 import (
-	"MailWizz-with-go/model"
-	"MailWizz-with-go/param"
-	"MailWizz-with-go/utils"
+	"mailwizz-sdk/model"
+	"mailwizz-sdk/param"
+	"mailwizz-sdk/utils"
 	"encoding/json"
 )
 

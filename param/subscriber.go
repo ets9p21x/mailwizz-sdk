@@ -7,7 +7,3 @@ type Subscriber struct {
 	LName         string `json:"LNAME"`
 	Custom        string `json:"CUSTOM"`
 }
-
-type SubscriberEmail struct {
-	Email string `json:"email"`
-}
