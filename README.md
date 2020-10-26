@@ -1,3 +1,3 @@
 # mailwizz-sdk
 
-MailWizz Gob版本SDK
+MailWizz Go版本SDK
